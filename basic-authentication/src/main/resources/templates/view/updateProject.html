@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="www.http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <div>
+  <title>Update</title>
+
+  </div>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+</head>
+<body>
+
+<form
+        method="post"
+        role="form"
+        th:action="@{/projects/updateProject/{id}(id=${project.id})}"
+        th:object="${project}"
+>
+  <h1 value="${project.name}"></h1>
+  <div class="form-group mb-3">
+    <label class="form-label">Name</label>
+
+<!--    <input-->
+<!--            class="form-control"-->
+<!--            id="id"-->
+<!--            name="id"-->
+<!--            type="hidden"-->
+<!--    />-->
+
+    <input
+            class="form-control"
+
+            id="name"
+            th:field="*{name}"
+            type="text"
+    />
+  </div>
+
+  <div class="form-group mb-3">
+    <label class="form-label">Intro</label>
+    <input
+            class="form-control"
+            id="intro"
+            th:field="*{intro}"
+            type="text"
+    />
+  </div>
+
+  <div class="form-group mb-3">
+    <label class="form-label">Owner</label>
+    <input
+            class="form-control"
+            id="owner"
+            th:field="*{owner}"
+            type="text"
+    />
+  </div>
+
+  <div class="form-group mb-3">
+    <label class="form-label">Status</label>
+
+    <!--        <select>-->
+    <!--            <option value="0">Pre</option>-->
+    <!--            <option value="1">Start</option>-->
+    <!--            <option value="3">End</option>-->
+    <!--        </select>-->
+    <input
+            class="form-control"
+            type="number"
+            th:field="*{status}"
+            id="status"
+            name="status"/>
+  </div>
+
+  <div class="form-group mb-3">
+    <label class="form-label">Start Date </label>
+    <input
+            type="datetime-local"
+            id="start-date"
+            name="start-date"
+            value="2018-06-12T19:30"
+
+    />
+  </div>
+
+
+  <div class="form-group mb-3">
+    <label class="form-label">End Date</label>
+    <input
+            type="datetime-local"
+            id="end-date"
+            name="end-date"
+            value="2018-06-12T19:30"
+
+    />
+  </div>
+
+
+
+
+  <div class="form-group">
+    <button class="btn btn-primary" type="submit">Update Project</button>
+  </div>
+</form>
+
+</body>
+</html>
