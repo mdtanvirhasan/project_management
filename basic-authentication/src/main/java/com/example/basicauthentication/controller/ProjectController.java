@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.awt.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -41,6 +42,12 @@ public class ProjectController {
 
     @GetMapping("/newproject")
     public String createNewPage(Model model){
+
+
+        List<User> usersList=userRepository.findAll();
+        System.out.println(usersList);
+
+
         Project project=new Project();
         model.addAttribute("project",project);
         return "view/addProject";
