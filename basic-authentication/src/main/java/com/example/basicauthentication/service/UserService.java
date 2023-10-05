@@ -4,4 +4,5 @@ import com.example.basicauthentication.entity.User;
 
 public interface UserService {
     User saveUser(User user);
+    User findUserByEmail(String name);
 }

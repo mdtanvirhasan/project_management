@@ -1,26 +1,28 @@
 package com.example.basicauthentication.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "user_table")
 public class User {
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
+    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinTable(
+            name="users_roles",
+            joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
+            inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
+    private List<Role> roles = new ArrayList<>();
+    private String password;
+
 
 //    public Collection<Project> getProjects() {
 //        return projects;
@@ -29,8 +31,6 @@ public class User {
 //    public void setProjects(Collection<Project> projects) {
 //        this.projects = projects;
 //    }
-
-    private String password;
 //    @ManyToMany(mappedBy = "members")
 //    private Collection<Project> projects;
 
@@ -66,13 +66,33 @@ public class User {
         this.password = password;
     }
 
-    public User(Long id, String name, String email, String password) {
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public User(Long id, String name, String email, String password, List<Role>roles) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.roles=roles;
     }
 
     public User() {
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

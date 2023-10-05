@@ -26,11 +26,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="newproject">Add project</a>
                 </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="newuser">Add user</a>-->
+<!--                </li>-->
                 <li class="nav-item">
-                    <a class="nav-link" href="newuser">Add user</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    <a class="nav-link" th:href="@{/logout}" tabindex="-1" >Log out</a>
                 </li>
             </ul>
         </div>
@@ -46,11 +46,11 @@
     <table class="table table-bordered table-hover">
         <thead class="table-dark">
         <tr>
-            <th>Project Creator</th>
-            <th>Project name</th>
+            <th>Project Name</th>
+            <th>Project Description</th>
             <th>Project status</th>
-<!--            <th>Owner</th>-->
-            <th>project id</th>
+            <th>Owner</th>
+<!--            <th>project id</th>-->
             <th>project Start Date</th>
             <th>project End Date</th>
             <th>project members</th>
@@ -61,8 +61,8 @@
             <td th:text="${project.name}"></td>
             <td th:text="${project.intro}"></td>
             <td th:text="${project.status}"></td>
-<!--            <td th:text="${project.owner}"></td>-->
-            <td th:text="${project.id}"></td>
+            <td th:text="${project.owner}"></td>
+<!--            <td th:text="${project.id}"></td>-->
             <td th:text="${project.startDate}"></td>
             <td th:text="${project.endDate}"></td>
             <td class="list-group">

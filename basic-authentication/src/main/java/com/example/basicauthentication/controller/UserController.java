@@ -30,7 +30,7 @@ public class UserController {
     @PostMapping(value="/createNewUser",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public  String createNewUser(User user){
         User newUser=userServiceImpl.saveUser(user);
-        return "view/projectList";
+        return "view/login";
     }
 
     @GetMapping("/userList")
@@ -38,5 +38,10 @@ public class UserController {
         List<User> userList=userServiceImpl.getAllUsers();
 
         return "view/projectList";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "view/login";
     }
 }
