@@ -50,6 +50,7 @@ public class ProjectController {
 
         Project project=new Project();
         model.addAttribute("project",project);
+        model.addAttribute("allUserList",usersList);
         return "view/addProject";
     }
 
@@ -69,8 +70,14 @@ public class ProjectController {
 
     @GetMapping("/projectList")
     public String projectList(Model model){
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        String username = authentication.getName();
+        User loggedInUser=userRepository.findByEmail(username);
+
 
         model.addAttribute("projects",projectServiceImpl.getAllProjects());
+        model.addAttribute("currentUser",loggedInUser);
         return "view/projectList";
     }
 

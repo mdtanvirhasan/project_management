@@ -71,7 +71,7 @@
                 </ul>
             </td>
 
-            <td><a th:href="@{/projects/showFormForUpdateProject/{id}(id=${project.id})}" >Edit</a></td>
+            <td><a th:if="${loggedInUser.id==}" th:href="@{/projects/showFormForUpdateProject/{id}(id=${project.id})}" >Edit</a></td>
 
 <!--            <td><form th:action="@{/projects/deleteProject/{id}(id=${project.id})}" method="post">-->
 <!--                <button type="submit">Delete</button>-->
