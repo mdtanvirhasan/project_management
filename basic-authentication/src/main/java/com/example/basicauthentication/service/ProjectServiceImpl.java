@@ -1,5 +1,6 @@
 package com.example.basicauthentication.service;
 
+import com.example.basicauthentication.dto.ListDto;
 import com.example.basicauthentication.dto.ProjectDto;
 import com.example.basicauthentication.entity.Project;
 import com.example.basicauthentication.entity.User;
@@ -56,12 +57,28 @@ public class ProjectServiceImpl implements ProjectService {
             project1.setEndDate(endDate);
         }
 
-
+        project1.setOwnerId(userRepository.findById(project.getOwner()).get().getId());
+        String name=userRepository.findById(project.getOwner()).get().getName();
+        project1.setOwner(name);
 //        System.out.println(project1.toString());
         Project pe=this.projectRepository.save(project1);
 
 
     }
+
+
+//    public ListDto resetOwner(Project project){
+//        ListDto listDto=new ListDto();
+//        listDto.setName(project.getName());
+//        listDto.setIntro(project.getIntro());
+//        User u=userRepository.findById(project.getOwner()).get();
+//        listDto.setOwner(u.getName());
+//        listDto.setStatus(project.getStatus());
+//        listDto.setStartDate(project.getStartDate());
+//        listDto.setEndDate(project.getEndDate());
+//        listDto.setMembers(project.getMembersIdList());
+//        return listDto;
+//    }
 
     public Project updateProject(Project project) {
         Project newProject = projectRepository.findById(project.getId()).get();
@@ -95,6 +112,8 @@ public class ProjectServiceImpl implements ProjectService {
 
         return null;
     }
+
+
 
 
 }

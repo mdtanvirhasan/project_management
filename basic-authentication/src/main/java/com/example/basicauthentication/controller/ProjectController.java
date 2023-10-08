@@ -1,5 +1,6 @@
 package com.example.basicauthentication.controller;
 
+import com.example.basicauthentication.dto.ListDto;
 import com.example.basicauthentication.dto.ProjectDto;
 import com.example.basicauthentication.entity.Project;
 import com.example.basicauthentication.entity.User;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -61,7 +63,7 @@ public class ProjectController {
         String username = authentication.getName();
         User loggedInUser=userRepository.findByEmail(username);
         System.out.println(loggedInUser.toString());
-        project.setOwner(loggedInUser.getName());
+        project.setOwner(loggedInUser.getId());
         projectServiceImpl.saveProject(project);
 //        System.out.println(project.toString());
         return "redirect:/projects/projectList";
@@ -74,6 +76,11 @@ public class ProjectController {
         Authentication authentication = context.getAuthentication();
         String username = authentication.getName();
         User loggedInUser=userRepository.findByEmail(username);
+//        List<Project> projects = projectServiceImpl.getAllProjects();
+//        List<ListDto> list = new ArrayList<>();
+//        for(Project p: projects){
+//            list.add(projectServiceImpl.resetOwner(p));
+//        }
 
 
         model.addAttribute("projects",projectServiceImpl.getAllProjects());

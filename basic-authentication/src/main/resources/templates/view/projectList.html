@@ -26,9 +26,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="newproject">Add project</a>
                 </li>
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="newuser">Add user</a>-->
-<!--                </li>-->
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/logout}" tabindex="-1" >Log out</a>
                 </li>
@@ -57,12 +54,27 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="project:${projects}">
-            <td th:text="${project.name}"></td>
+        <tr th:each="project:${projects}" >
+            <td th:text="${project.name}" ></td>
             <td th:text="${project.intro}"></td>
             <td th:text="${project.status}"></td>
-            <td th:text="${project.owner}"></td>
-<!--            <td th:text="${project.id}"></td>-->
+            <td id="p_owner" th:text="${project.owner}"></td>
+
+            <script>
+                const ownerId=document.getElementById('p_owner').value;
+                function getName(id){
+                    fetch("http://localhost:8099/getName/"+id)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("fetched user details:"+data);
+                            document.getElementById("owner_name").value=data.toString();
+                        })
+                        .catch(error => {
+                            console.error("Error fetching data:", error);
+                        });
+                }
+            </script>
+
             <td th:text="${project.startDate}"></td>
             <td th:text="${project.endDate}"></td>
             <td class="list-group">
@@ -71,28 +83,11 @@
                 </ul>
             </td>
 
-            <td><a th:if="${loggedInUser.id==}" th:href="@{/projects/showFormForUpdateProject/{id}(id=${project.id})}" >Edit</a></td>
-
-<!--            <td><form th:action="@{/projects/deleteProject/{id}(id=${project.id})}" method="post">-->
-<!--                <button type="submit">Delete</button>-->
-<!--            </form></td>-->
-<!--            -->
+            <td ><a th:if="${currentUser.id == project.ownerId}" th:href="@{/projects/showFormForUpdateProject/{id}(id=${project.id})}" >Edit</a></td>
 
 
-                <td><a th:href="@{/projects/deleteProject/{id}(id=${project.id})}" onclick="return confirm('Are you sure you want to delete?')">Delete</a></td>
+                <td><a th:if="${currentUser.id == project.ownerId}" th:href="@{/projects/deleteProject/{id}(id=${project.id})}" onclick="return confirm('Are you sure you want to delete?')">Delete</a></td>
 
-
-
-<!--            <td>-->
-<!--                    <button onclick="document.getElementById('id01').style.display='block'" >Delete</button>-->
-<!--                <div id="id01" class="" style="background: aliceblue">-->
-<!--                    <p>Are you sure you want to delete project?</p>-->
-<!--                    <form th:action="@{/projects/deleteProject/{id}(id=${project.id})}" method="post" >-->
-<!--                                <button type="button" onclick="document.getElementById('id01').style.display='none'">Cancel</button>-->
-<!--                                <button type="submit">Delete</button>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </td>-->
         </tr>
         </tbody>
     </table>

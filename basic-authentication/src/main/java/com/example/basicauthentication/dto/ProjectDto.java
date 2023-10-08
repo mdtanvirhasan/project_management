@@ -11,7 +11,7 @@ import java.util.List;
 public class ProjectDto {
     private String name;
     private String intro;
-    private String owner;
+    private Long owner;
     private int status;
     private String startDate;
     private String endDate;

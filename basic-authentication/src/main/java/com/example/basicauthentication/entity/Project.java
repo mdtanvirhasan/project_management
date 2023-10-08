@@ -21,6 +21,7 @@ public class Project {
     private String name;
     private String intro;
     private String owner;
+    private Long ownerId;
     private int status;
     private LocalDate startDate;
     private LocalDate endDate;
