@@ -1,29 +1,21 @@
 package com.example.basicauthentication.controller;
 
-import com.example.basicauthentication.dto.ListDto;
 import com.example.basicauthentication.dto.ProjectDto;
 import com.example.basicauthentication.entity.Project;
 import com.example.basicauthentication.entity.User;
 import com.example.basicauthentication.repository.UserRepository;
-import com.example.basicauthentication.service.ProjectService;
 import com.example.basicauthentication.service.ProjectServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,12 +39,20 @@ public class ProjectController {
 
 
         List<User> usersList=userRepository.findAll();
+        List<User> updatedList=new ArrayList<User>();
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        String username = authentication.getName();
+        User loggedInUser=userRepository.findByEmail(username);
+        for(User user:usersList){
+            if(user.getId()!=loggedInUser.getId()){
+                updatedList.add(user);
+            }
+        }
         System.out.println(usersList);
-
-
         Project project=new Project();
         model.addAttribute("project",project);
-        model.addAttribute("allUserList",usersList);
+        model.addAttribute("allUserList",updatedList);
         return "view/addProject";
     }
 
@@ -76,13 +76,6 @@ public class ProjectController {
         Authentication authentication = context.getAuthentication();
         String username = authentication.getName();
         User loggedInUser=userRepository.findByEmail(username);
-//        List<Project> projects = projectServiceImpl.getAllProjects();
-//        List<ListDto> list = new ArrayList<>();
-//        for(Project p: projects){
-//            list.add(projectServiceImpl.resetOwner(p));
-//        }
-
-
         model.addAttribute("projects",projectServiceImpl.getAllProjects());
         model.addAttribute("currentUser",loggedInUser);
         return "view/projectList";
