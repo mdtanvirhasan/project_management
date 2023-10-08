@@ -4,7 +4,9 @@ import com.example.basicauthentication.dto.ProjectDto;
 import com.example.basicauthentication.entity.Project;
 import com.example.basicauthentication.entity.User;
 import com.example.basicauthentication.repository.UserRepository;
+import com.example.basicauthentication.service.JRepostService;
 import com.example.basicauthentication.service.ProjectServiceImpl;
+import net.sf.jasperreports.engine.JRException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,7 +17,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +40,9 @@ public class ProjectController {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private JRepostService service;
 
     @GetMapping("/newproject")
     public String createNewPage(Model model){
@@ -108,6 +118,19 @@ public class ProjectController {
         Optional<Project> project=projectServiceImpl.getById(id);
         projectServiceImpl.deleteProject(project);
         return "redirect:/projects/projectList";
+    }
+
+    @GetMapping("/jasperpdf/export")
+    public void createPDF(HttpServletResponse response) throws IOException, JRException {
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=pdf_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        service.exportJasperReport(response);
     }
 
 }
