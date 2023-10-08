@@ -22,7 +22,7 @@ public class Project {
     private String intro;
     private String owner;
     private Long ownerId;
-    private int status;
+    private String status;
     private LocalDate startDate;
     private LocalDate endDate;
 //    private List<Long> membersList;

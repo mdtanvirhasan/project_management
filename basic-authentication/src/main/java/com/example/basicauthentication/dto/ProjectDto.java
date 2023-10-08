@@ -12,7 +12,7 @@ public class ProjectDto {
     private String name;
     private String intro;
     private Long owner;
-    private int status;
+    private String status;
     private String startDate;
     private String endDate;
     private List<Long> membersList;

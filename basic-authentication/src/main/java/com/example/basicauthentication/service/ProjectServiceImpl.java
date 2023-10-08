@@ -58,6 +58,7 @@ public class ProjectServiceImpl implements ProjectService {
         String name=userRepository.findById(project.getOwner()).get().getName();
         project1.setOwner(name);
 //        System.out.println(project1.toString());
+        project1.setStatus(project.getStatus());
         Project pe=this.projectRepository.save(project1);
 
 
