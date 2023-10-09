@@ -10,12 +10,14 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
+    List<Project> findProjectByStartDateAndEndDate(LocalDate startDate,LocalDate endDate);
 
 
 }

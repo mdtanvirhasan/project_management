@@ -3,6 +3,7 @@ package com.example.basicauthentication.controller;
 import com.example.basicauthentication.dto.ProjectDto;
 import com.example.basicauthentication.entity.Project;
 import com.example.basicauthentication.entity.User;
+import com.example.basicauthentication.repository.ProjectRepository;
 import com.example.basicauthentication.repository.UserRepository;
 import com.example.basicauthentication.service.JRepostService;
 import com.example.basicauthentication.service.ProjectServiceImpl;
@@ -31,6 +32,9 @@ import java.util.Optional;
 public class ProjectController {
 
 
+
+    @Autowired
+    ProjectRepository projectRepository;
 
     @Autowired
     ProjectServiceImpl projectServiceImpl;
@@ -120,6 +124,12 @@ public class ProjectController {
         return "redirect:/projects/projectList";
     }
 
+
+    @GetMapping("/getProject")
+    public List<Project> getProject(){
+        List<Project> projectList=(List<Project>) projectRepository.findAll();
+        return projectList;
+    }
     @GetMapping("/jasperpdf/export")
     public void createPDF(HttpServletResponse response) throws IOException, JRException {
         response.setContentType("application/pdf");

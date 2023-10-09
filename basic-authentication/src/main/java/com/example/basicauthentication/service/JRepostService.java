@@ -20,14 +20,15 @@ public class JRepostService {
 
     @Autowired
     ProjectRepository projectRepository;
+
     public void exportJasperReport(HttpServletResponse response) throws JRException, IOException {
-        List<Project> address = projectRepository.findAll();
+        List<Project> projectList = projectRepository.findAll();
         //Get file and compile it
-        File file = ResourceUtils.getFile("classpath:Address_01.jrxml");
+        File file = ResourceUtils.getFile("classpath:projectreport.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(address);
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(projectList);
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("createdBy", "Simplifying Tech");
+        parameters.put("createdBy", "tanvir");
         //Fill Jasper report
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
         //Export report
