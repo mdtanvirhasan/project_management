@@ -84,6 +84,12 @@ public class ProjectServiceImpl implements ProjectService {
         newProject.setIntro(project.getIntro());
         newProject.setOwner(project.getOwner());
         newProject.setStatus(project.getStatus());
+        if(project.getStartDate()!=null){
+            newProject.setStartDate(project.getStartDate());
+        }
+        if(project.getEndDate()!=null){
+            newProject.setEndDate(project.getEndDate());
+        }
 //        newProject.getStartDate(project.getStartDate());
 
 

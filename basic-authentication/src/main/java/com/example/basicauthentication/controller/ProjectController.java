@@ -143,4 +143,10 @@ public class ProjectController {
         service.exportJasperReport(response);
     }
 
+    @GetMapping("/generationPage")
+    public String generationPage(Model model){
+        model.addAttribute("projects",projectServiceImpl.getAllProjects());
+        return "view/generationPage";
+    }
+
 }
