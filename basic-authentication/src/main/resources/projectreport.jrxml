@@ -67,7 +67,7 @@
     <columnHeader>
         <band height="38" splitType="Stretch">
             <staticText>
-                <reportElement style="Column header" isPrintRepeatedValues="false" x="0" y="7" width="111" height="18" forecolor="#000000" uuid="3e565777-92dc-4957-854a-5f7f23e64394">
+                <reportElement style="Column header" x="0" y="7" width="111" height="18" forecolor="#000000" uuid="3e565777-92dc-4957-854a-5f7f23e64394">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ddd4915e-a03f-4bc1-8008-0ed877840046"/>
                 </reportElement>
                 <textElement>
