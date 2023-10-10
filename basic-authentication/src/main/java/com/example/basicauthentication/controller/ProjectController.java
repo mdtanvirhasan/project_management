@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -90,6 +91,8 @@ public class ProjectController {
         Authentication authentication = context.getAuthentication();
         String username = authentication.getName();
         User loggedInUser=userRepository.findByEmail(username);
+        List<Project> list=projectServiceImpl.getAllProjects();
+        list.forEach(l-> System.out.println(l.getStartDate().getClass().getName()));
         model.addAttribute("projects",projectServiceImpl.getAllProjects());
         model.addAttribute("currentUser",loggedInUser);
         return "view/projectList";

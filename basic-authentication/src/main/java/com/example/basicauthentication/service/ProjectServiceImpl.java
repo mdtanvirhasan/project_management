@@ -26,6 +26,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void saveProject(ProjectDto project) {
+
         Project project1 = new Project();
         List<User> members= new ArrayList<>();
         BeanUtils.copyProperties(project,project1);
@@ -40,24 +41,29 @@ public class ProjectServiceImpl implements ProjectService {
 //            System.out.println(members.toString());
         }
 
-        project1.setMembers(members);
-        if(!project.getStartDate().isEmpty()){
-            System.out.println(project.getStartDate().substring(0,10));
-            project.setStartDate(project.getStartDate().substring(0,10));
-            LocalDate stDate=LocalDate.parse(project.getStartDate(),formatter);
-            project1.setStartDate(stDate);
-        }
 
-        if(project.getEndDate()!=null){
-            project.setEndDate(project.getEndDate().substring(0,10));
-            LocalDate endDate=LocalDate.parse(project.getEndDate(),formatter);
-            project1.setEndDate(endDate);
-        }
+        project1.setMembers(members);
+
+//        if(!project.getStartDate().isEmpty()){
+//            System.out.println(project.getStartDate().substring(0,10));
+//            project.setStartDate(project.getStartDate().substring(0,10));
+//            LocalDate stDate=LocalDate.parse(project.getStartDate(),formatter);
+//            project1.setStartDate(stDate);
+//        }
+//
+//        if(project.getEndDate()!=null){
+//            project.setEndDate(project.getEndDate().substring(0,10));
+//            LocalDate endDate=LocalDate.parse(project.getEndDate(),formatter);
+//            project1.setEndDate(endDate);
+//        }
 
         project1.setOwnerId(userRepository.findById(project.getOwner()).get().getId());
         String name=userRepository.findById(project.getOwner()).get().getName();
         project1.setOwner(name);
 //        System.out.println(project1.toString());
+
+        project1.setStartDate(project.getStartDate());
+        project1.setEndDate(project.getEndDate());
         project1.setStatus(project.getStatus());
         Project pe=this.projectRepository.save(project1);
 

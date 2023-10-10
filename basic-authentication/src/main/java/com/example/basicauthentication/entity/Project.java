@@ -1,6 +1,7 @@
 package com.example.basicauthentication.entity;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -23,7 +24,9 @@ public class Project {
     private String owner;
     private Long ownerId;
     private String status;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 //    private List<Long> membersList;
     @ManyToMany(targetEntity = User.class,cascade = CascadeType.ALL)
