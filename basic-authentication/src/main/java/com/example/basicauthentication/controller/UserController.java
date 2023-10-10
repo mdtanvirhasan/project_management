@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -28,7 +30,10 @@ public class UserController {
     }
 
     @PostMapping(value="/createNewUser",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public  String createNewUser(User user){
+    public  String createNewUser(@Valid User user, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "view/addUser";
+        }
         User newUser=userServiceImpl.saveUser(user);
         return "view/login";
     }
@@ -41,7 +46,9 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(){
-        return "view/login";
+    public String login(){ return "view/login";
     }
+
+
+
 }

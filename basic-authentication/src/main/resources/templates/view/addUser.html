@@ -44,6 +44,8 @@
               type="text"
 
       />
+<!--      <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>-->
+      <p th:if="${#fields.hasErrors('name')}" th:style="'color: red;'">Name cannot be empty.</p>
     </div>
 
     <div class="form-group mb-3">
@@ -54,6 +56,8 @@
               name="email"
               type="email"
       />
+      <p th:if="${#fields.hasErrors('email')}" th:style="'color: red;'">Email cannot be empty.</p>
+
     </div>
 
     <div class="form-group mb-3">
@@ -64,6 +68,8 @@
               name="password"
               type="password"
       />
+      <p th:if="${#fields.hasErrors('password')}" th:style="'color: red;'" >Password cannot be empty.</p>
+
     </div>
     <div class="form-group">
       <button class="btn btn-primary" type="submit">Create User</button>

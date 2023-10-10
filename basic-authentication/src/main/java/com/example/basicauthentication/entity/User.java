@@ -3,6 +3,9 @@ package com.example.basicauthentication.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,7 +18,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "User's name cannot be empty.")
     private String name;
+    @NotEmpty(message = "Email cannot be empty.")
     private String email;
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinTable(
@@ -25,6 +30,7 @@ public class User {
     @JsonIgnore
     private List<Role> roles = new ArrayList<>();
     @JsonIgnore
+    @NotEmpty(message = "Password cannot be empty.")
     private String password;
 
 
