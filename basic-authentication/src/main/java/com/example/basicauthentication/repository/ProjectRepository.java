@@ -17,7 +17,7 @@ import java.util.function.Function;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
-    List<Project> findProjectByStartDateAndEndDate(LocalDate startDate,LocalDate endDate);
+
 
 
 }

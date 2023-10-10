@@ -21,6 +21,8 @@ public class UserFetcherController {
     private UserServiceImpl userServiceImpl;
     private String name;
 
+
+
     @GetMapping("/getAllUsers")
     public List<User> getAllUser(){
         List<User> userList=userServiceImpl.getAllUsers();

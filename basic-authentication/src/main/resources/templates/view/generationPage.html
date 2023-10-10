@@ -29,6 +29,13 @@
         <li class="nav-item">
           <a class="nav-link" th:href="@{/logout}" tabindex="-1" >Log out</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link"
+
+             th:href="@{/projects/jasperpdf/export/{startDate}/{endDate} (startDate=${srStartDate}, endDate=${srEndDate})}"
+
+             tabindex="-1" >Generate Report</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -80,12 +87,6 @@
           <li th:text="${member.name}"> ></li>
         </ul>
       </td>
-
-<!--      <td ><a th:if="${currentUser.id == project.ownerId}" th:href="@{/projects/showFormForUpdateProject/{id}(id=${project.id})}" >Edit</a></td>-->
-
-
-<!--      <td><a th:if="${currentUser.id == project.ownerId}" th:href="@{/projects/deleteProject/{id}(id=${project.id})}" onclick="return confirm('Are you sure you want to delete?')">Delete</a></td>-->
-
     </tr>
     </tbody>
   </table>

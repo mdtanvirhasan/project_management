@@ -11,6 +11,8 @@ import org.springframework.util.ResourceUtils;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +23,11 @@ public class JRepostService {
     @Autowired
     ProjectRepository projectRepository;
 
-    public void exportJasperReport(HttpServletResponse response) throws JRException, IOException {
-        List<Project> projectList = projectRepository.findAll();
+    @Autowired
+    ProjectServiceImpl projectService;
+
+    public void exportJasperReport(HttpServletResponse response, List<Project> list) throws JRException, IOException {
+        List<Project> projectList = list;
         //Get file and compile it
         File file = ResourceUtils.getFile("classpath:projectreport.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());

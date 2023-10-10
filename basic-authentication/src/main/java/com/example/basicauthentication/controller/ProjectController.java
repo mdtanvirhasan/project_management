@@ -1,15 +1,18 @@
 package com.example.basicauthentication.controller;
 
 import com.example.basicauthentication.dto.ProjectDto;
+import com.example.basicauthentication.dto.SearchDto;
 import com.example.basicauthentication.entity.Project;
 import com.example.basicauthentication.entity.User;
 import com.example.basicauthentication.repository.ProjectRepository;
 import com.example.basicauthentication.repository.UserRepository;
 import com.example.basicauthentication.service.JRepostService;
 import com.example.basicauthentication.service.ProjectServiceImpl;
+import net.bytebuddy.asm.Advice;
 import net.sf.jasperreports.engine.JRException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -23,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -93,6 +97,7 @@ public class ProjectController {
         User loggedInUser=userRepository.findByEmail(username);
         List<Project> list=projectServiceImpl.getAllProjects();
         list.forEach(l-> System.out.println(l.getStartDate().getClass().getName()));
+
         model.addAttribute("projects",projectServiceImpl.getAllProjects());
         model.addAttribute("currentUser",loggedInUser);
         return "view/projectList";
@@ -133,8 +138,10 @@ public class ProjectController {
         List<Project> projectList=(List<Project>) projectRepository.findAll();
         return projectList;
     }
-    @GetMapping("/jasperpdf/export")
-    public void createPDF(HttpServletResponse response) throws IOException, JRException {
+    @GetMapping("/jasperpdf/export/{startDate}/{endDate}")
+    public void createPDF(HttpServletResponse response, @PathVariable("startDate")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, @PathVariable("endDate")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException, JRException {
+
+        List<Project> reportList=projectServiceImpl.findProjectByStartDateAndEndDate(startDate,endDate);
         response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         String currentDateTime = dateFormatter.format(new Date());
@@ -143,12 +150,18 @@ public class ProjectController {
         String headerValue = "attachment; filename=pdf_" + currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
 
-        service.exportJasperReport(response);
+        service.exportJasperReport(response,reportList);
     }
 
-    @GetMapping("/generationPage")
-    public String generationPage(Model model){
-        model.addAttribute("projects",projectServiceImpl.getAllProjects());
+    @PostMapping(value="/search",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String filteredList(SearchDto searchDto, Model model){
+        System.out.println(searchDto.getSrStartDate());
+        System.out.println(searchDto.getSrEndDate());
+
+        System.out.println(projectServiceImpl.findProjectByStartDateAndEndDate(searchDto.getSrStartDate(),searchDto.getSrEndDate()).toString());
+        model.addAttribute("projects",projectServiceImpl.findProjectByStartDateAndEndDate(searchDto.getSrStartDate(),searchDto.getSrEndDate()));
+        model.addAttribute("srStartDate",searchDto.getSrStartDate());
+        model.addAttribute("srEndDate",searchDto.getSrEndDate());
         return "view/generationPage";
     }
 

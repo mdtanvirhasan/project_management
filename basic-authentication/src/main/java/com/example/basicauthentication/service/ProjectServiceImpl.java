@@ -124,6 +124,20 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
 
+    @Override
+    public List<Project> findProjectByStartDateAndEndDate(LocalDate startDate, LocalDate endDate) {
+        List<Project> projectsByDate = new ArrayList<>();
+        List<Project> projects = projectRepository.findAll();
+        for(Project project: projects)
+        {
+            if((project.getStartDate().isAfter(startDate) || project.getStartDate().isEqual(startDate) ) && (project.getEndDate().isBefore(endDate) || project.getStartDate().isEqual(endDate)))
+                projectsByDate.add(project);
+        }
+
+        return projectsByDate;
+    }
+
+
 
 
 }
