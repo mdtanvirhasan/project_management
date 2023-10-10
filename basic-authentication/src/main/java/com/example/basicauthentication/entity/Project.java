@@ -1,12 +1,12 @@
 package com.example.basicauthentication.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 @Getter
 @Setter
@@ -22,6 +22,7 @@ public class Project {
     private String name;
     private String intro;
     private String owner;
+
     private Long ownerId;
     private String status;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -37,7 +38,6 @@ public class Project {
 //    )
     @JoinColumn(name = "fk_project_meber",referencedColumnName = "id")
     private List<User> members;
-
 
     public List<Long> getMembersIdList() {
         List<Long> ids=new ArrayList<>();

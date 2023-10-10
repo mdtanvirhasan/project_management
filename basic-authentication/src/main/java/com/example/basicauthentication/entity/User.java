@@ -1,5 +1,7 @@
 package com.example.basicauthentication.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +22,9 @@ public class User {
             name="users_roles",
             joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
+    @JsonIgnore
     private List<Role> roles = new ArrayList<>();
+    @JsonIgnore
     private String password;
 
 
