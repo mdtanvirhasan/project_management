@@ -39,9 +39,6 @@ public class Project {
     private List<User> members;
 
 
-
-
-
     public List<Long> getMembersIdList() {
         List<Long> ids=new ArrayList<>();
         for(User member : members){

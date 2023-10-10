@@ -29,7 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests((authorize)->
-                            authorize.antMatchers("/users/newuser","/users/createNewUser","/projects/jasperpdf/export").permitAll()
+                            authorize.antMatchers("/users/newuser","/users/createNewUser","/projects/jasperpdf/export","/api/**").permitAll()
                         .antMatchers("/projects/**").hasRole("ADMIN")
                         ).formLogin(
                                 form->form
