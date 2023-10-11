@@ -21,12 +21,11 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "Name cannot be empty.")
+//    @NotEmpty(message = "Project name cannot be empty.")
     private String name;
-    @NotEmpty(message = "Intro cannot be empty.")
+//    @NotEmpty(message = "Intro cannot be empty.")
     private String intro;
     private String owner;
-
     private Long ownerId;
     private String status;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

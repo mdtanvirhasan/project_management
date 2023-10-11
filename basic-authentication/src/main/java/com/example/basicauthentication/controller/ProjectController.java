@@ -78,7 +78,7 @@ public class ProjectController {
     }
 
     @PostMapping(value="/createNewProject",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String createNewProject(@Valid ProjectDto project, BindingResult bindingResult){
+    public String createNewProject(ProjectDto project, BindingResult bindingResult){
 //        if(bindingResult.hasErrors()){
 //            return "view/addProject";
 //        }

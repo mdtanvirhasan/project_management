@@ -12,9 +12,9 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class ProjectDto {
-    @NotEmpty(message = "Name cannot be empty.")
+//    @NotEmpty(message = "Project name cannot be empty.")
     private String name;
-    @NotEmpty(message = "Intro cannot be empty.")
+//    @NotEmpty(message = "Intro cannot be empty.")
     private String intro;
     private Long owner;
     private String status;
