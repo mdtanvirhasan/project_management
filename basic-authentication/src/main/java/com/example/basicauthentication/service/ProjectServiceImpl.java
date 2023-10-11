@@ -44,18 +44,6 @@ public class ProjectServiceImpl implements ProjectService {
 
         project1.setMembers(members);
 
-//        if(!project.getStartDate().isEmpty()){
-//            System.out.println(project.getStartDate().substring(0,10));
-//            project.setStartDate(project.getStartDate().substring(0,10));
-//            LocalDate stDate=LocalDate.parse(project.getStartDate(),formatter);
-//            project1.setStartDate(stDate);
-//        }
-//
-//        if(project.getEndDate()!=null){
-//            project.setEndDate(project.getEndDate().substring(0,10));
-//            LocalDate endDate=LocalDate.parse(project.getEndDate(),formatter);
-//            project1.setEndDate(endDate);
-//        }
 
         project1.setOwnerId(userRepository.findById(project.getOwner()).get().getId());
         String name=userRepository.findById(project.getOwner()).get().getName();
@@ -69,20 +57,6 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     }
-
-
-//    public ListDto resetOwner(Project project){
-//        ListDto listDto=new ListDto();
-//        listDto.setName(project.getName());
-//        listDto.setIntro(project.getIntro());
-//        User u=userRepository.findById(project.getOwner()).get();
-//        listDto.setOwner(u.getName());
-//        listDto.setStatus(project.getStatus());
-//        listDto.setStartDate(project.getStartDate());
-//        listDto.setEndDate(project.getEndDate());
-//        listDto.setMembers(project.getMembersIdList());
-//        return listDto;
-//    }
 
     public Project updateProject(Project project) {
         Project newProject = projectRepository.findById(project.getId()).get();
@@ -130,8 +104,11 @@ public class ProjectServiceImpl implements ProjectService {
         List<Project> projects = projectRepository.findAll();
         for(Project project: projects)
         {
-            if((project.getStartDate().isAfter(startDate) || project.getStartDate().isEqual(startDate) ) && (project.getEndDate().isBefore(endDate) || project.getStartDate().isEqual(endDate)))
-                projectsByDate.add(project);
+            if(project.getStartDate()!=null && project.getEndDate()!=null){
+                if((project.getStartDate().isAfter(startDate) || project.getStartDate().isEqual(startDate) ) && (project.getEndDate().isBefore(endDate) || project.getStartDate().isEqual(endDate)))
+                    projectsByDate.add(project);
+            }
+
         }
 
         return projectsByDate;

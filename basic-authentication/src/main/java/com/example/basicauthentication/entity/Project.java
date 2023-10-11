@@ -33,7 +33,7 @@ public class Project {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 //    private List<Long> membersList;
-    @ManyToMany(targetEntity = User.class,cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = User.class,cascade = CascadeType.PERSIST)
 //    @JoinTable(
 //            name = "project_member_list",
 //            joinColumns = @JoinColumn(name = "project_id"),

@@ -13,85 +13,110 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
         crossorigin="anonymous">
 </head>
-<body class="mx-auto w-50">
-
-<h1 class="my-5">Update Project <p th:text="${project.name}"></p></h1>
-
-<form
-        method="post"
-        role="form"
-        th:action="@{/projects/updateProject/{id}(id=${project.id})}"
-        th:object="${project}"
->
-  <h1 value="${project.name}"></h1>
-  <div class="form-group mb-3">
-    <label class="form-label">Name</label>
-    <input
-            class="form-control"
-            id="name"
-            th:field="*{name}"
-            type="text"
-    />
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a style="margin-left: 40rem;margin-right: 30rem" class="navbar-brand" >Project Management System</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/projects/projectList}" tabindex="-1" >Project List</a>
+        </li>
+      </ul>
+    </div>
   </div>
+</nav>
 
-  <div class="form-group mb-3">
-    <label class="form-label">Intro</label>
-    <input
-            class="form-control"
-            id="intro"
-            th:field="*{intro}"
-            type="text"
-    />
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3" >
+      <div class="card">
+        <div class="card-header">
+          <h2 class="text-center" >Edit Project <h2 th:text="${project.name}"></h2></h2>
+        </div>
+        <div class="card-body">
+          <form
+                  method="post"
+                  role="form"
+                  th:action="@{/projects/updateProject/{id}(id=${project.id})}"
+                  th:object="${project}"
+          >
+            <h1 value="${project.name}"></h1>
+            <div class="form-group mb-3">
+              <label class="form-label">Name</label>
+              <input
+                      class="form-control"
+                      id="name"
+                      th:field="*{name}"
+                      type="text"
+              />
+            </div>
+
+            <div class="form-group mb-3">
+              <label class="form-label">Intro</label>
+              <input
+                      class="form-control"
+                      id="intro"
+                      th:field="*{intro}"
+                      type="text"
+              />
+            </div>
+
+            <div class="form-group mb-3">
+              <label class="form-label">Owner</label>
+              <input
+                      class="form-control"
+                      id="owner"
+                      th:field="*{owner}"
+                      type="text"
+              />
+            </div>
+
+            <div class="form-group mb-3">
+              <label class="form-label">Status</label>
+              <select th:field="*{status}" id="status" name="status" class="status">
+                <option value="Pre" >0</option>
+                <option value="Start">1</option>
+                <option value="End">3</option>
+              </select>
+            </div>
+
+            <div class="form-group mb-3">
+              <label class="form-label">Start Date </label>
+              <input
+                      type="date"
+
+                      id="startDate"
+                      th:field="*{startDate}"
+
+              />
+            </div>
+
+
+            <div class="form-group mb-3">
+              <label class="form-label">End Date</label>
+              <input
+                      type="date"
+                      id="endDate"
+                      th:field="*{endDate}"
+
+              />
+            </div>
+
+
+
+
+            <div class="form-group">
+              <button class="btn btn-primary" type="submit">Update Project</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="form-group mb-3">
-    <label class="form-label">Owner</label>
-    <input
-            class="form-control"
-            id="owner"
-            th:field="*{owner}"
-            type="text"
-    />
-  </div>
-
-  <div class="form-group mb-3">
-    <label class="form-label">Status</label>
-    <select th:field="*{status}" id="status" name="status" class="status">
-      <option value="Pre" >0</option>
-      <option value="Start">1</option>
-      <option value="End">3</option>
-    </select>
-  </div>
-
-  <div class="form-group mb-3">
-    <label class="form-label">Start Date </label>
-    <input
-            type="date"
-
-            id="startDate"
-            th:field="*{startDate}"
-
-    />
-  </div>
-
-
-  <div class="form-group mb-3">
-    <label class="form-label">End Date</label>
-    <input
-            type="date"
-            id="endDate"
-            th:field="*{endDate}"
-
-    />
-  </div>
-
-
-
-
-  <div class="form-group">
-    <button class="btn btn-primary" type="submit">Update Project</button>
-  </div>
-</form>
-
+</div>
 </body>
 </html>

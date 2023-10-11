@@ -102,7 +102,7 @@ public class ProjectController {
         String username = authentication.getName();
         User loggedInUser=userRepository.findByEmail(username);
         List<Project> list=projectServiceImpl.getAllProjects();
-        list.forEach(l-> System.out.println(l.getStartDate().getClass().getName()));
+//        list.forEach(l-> System.out.println(l.getStartDate().getClass().getName()));
 
         model.addAttribute("projects",projectServiceImpl.getAllProjects());
         model.addAttribute("currentUser",loggedInUser);

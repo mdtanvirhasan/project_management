@@ -30,8 +30,10 @@ public class UserFetcherController {
     }
 
     @GetMapping("/getName/{id}")
-    public void getUser(@PathVariable("id") Long id){
+    public String getUser(@PathVariable("id") Long id){
         Optional<User> user=userRepository.findById(id);
+        String username=user.get().getName();
         System.out.println(user.toString());
+        return username;
     }
 }
