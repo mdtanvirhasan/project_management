@@ -95,14 +95,15 @@
                     <td class="list-group">
                         <ul th:each="member:${project.members}">
                             <!--                    <button class="btn btn-light">-->
-                            <li th:text="${member.name}"> ></li>
+<!--                            <li th:text="${member.name}"> ></li>-->
+                            <button class="btn btn-primary" style="color: black;background: white;" th:text="${member.name}" ></button>
                             <!--                    </button>-->
                         </ul>
                     </td>
 
                     <td >
-                        <button class="btn btn-primary" style="background: black;color: white" ><a style="text-decoration: none;color: white" th:if="${currentUser.id == project.ownerId}" th:href="@{/projects/showFormForUpdateProject/{id}(id=${project.id})}" >Edit</a></button>
-                        <button class="btn btn-primary" style="background: black;color: white"><a style="text-decoration: none; color: white" th:if="${currentUser.id == project.ownerId}" th:href="@{/projects/deleteProject/{id}(id=${project.id})}" onclick="return confirm('Are you sure you want to delete?')">Delete</a></button>
+                        <button th:if="${currentUser.id == project.ownerId}" class="btn btn-primary" style="background: black;color: white" ><a style="text-decoration: none;color: white"  th:href="@{/projects/showFormForUpdateProject/{id}(id=${project.id})}" >Edit</a></button>
+                        <button th:if="${currentUser.id == project.ownerId}" class="btn btn-primary" style="background: black;color: white"><a style="text-decoration: none; color: white"  th:href="@{/projects/deleteProject/{id}(id=${project.id})}" onclick="return confirm('Are you sure you want to delete?')">Delete</a></button>
                     </td>
                 </tr>
                 </tbody>
@@ -135,11 +136,13 @@
                             <div class="form-group mb-3" style="margin-left: 1rem">
                                 <label class="control-label"> From </label>
                                 <input
+                                        required
                                         style="width: 10rem;"
                                         type="date"
                                         id="srStartDate"
                                         name="srStartDate"
                                         class="form-control"
+
 
                                 />
                             </div>
@@ -147,6 +150,7 @@
                             <div class="form-group mb-3" style="margin-left: 1rem">
                                 <label class="control-label"> To</label>
                                 <input
+                                        required
                                         style="width: 10rem"
                                         type="date"
                                         id="srEndDate"

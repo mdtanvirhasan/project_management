@@ -80,7 +80,9 @@
           <td th:text="${project.endDate}"></td>
           <td class="list-group">
             <ul th:each="member:${project.members}">
-              <li th:text="${member.name}"> ></li>
+<!--              <li th:text="${member.name}"> ></li>-->
+              <button class="btn btn-primary" style="color: black;background: white;" th:text="${member.name}" ></button>
+
             </ul>
           </td>
         </tr>

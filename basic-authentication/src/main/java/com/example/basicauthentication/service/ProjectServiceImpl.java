@@ -58,11 +58,19 @@ public class ProjectServiceImpl implements ProjectService {
 
     }
 
-    public Project updateProject(Project project) {
-        Project newProject = projectRepository.findById(project.getId()).get();
+
+
+
+    public Project updateProject(ProjectDto project,Long id) {
+        Project newProject = projectRepository.findById(id).get();
         newProject.setName(project.getName());
         newProject.setIntro(project.getIntro());
-        newProject.setOwner(project.getOwner());
+
+//        newProject.setOwnerId(userRepository.findById(project.getOwner()).get().getId());
+
+//        newProject.setOwner(name);
+
+//        newProject.setOwner(project.getOwner());
         newProject.setStatus(project.getStatus());
         if(project.getStartDate()!=null){
             newProject.setStartDate(project.getStartDate());
@@ -70,6 +78,29 @@ public class ProjectServiceImpl implements ProjectService {
         if(project.getEndDate()!=null){
             newProject.setEndDate(project.getEndDate());
         }
+
+
+        List<User> members= new ArrayList<>();
+
+        List<Long> idList=project.getMembersList();
+//        System.out.println(idList.toString());
+        for (int i = 0; i < idList.size(); i++) {
+//            System.out.println(idList.get(i));
+            User user=userRepository.findById(idList.get(i)).orElse(null);
+//            System.out.println(user.toString());
+            members.add(user);
+//            System.out.println(members.toString());
+        }
+
+        if(members.size()>0){
+            newProject.setMembers(members);
+        }
+
+
+
+
+//        System.out.println(project.getMembers());
+//        newProject.setMembers(project.getMembers());
 //        newProject.getStartDate(project.getStartDate());
 
 

@@ -6,10 +6,11 @@
     <meta charset="UTF-8">
     <title>Create new project</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css">
     <script type="text/javascript">
         function dateSetter(element) {
             var text = element.options[element.selectedIndex].text;
-            if(text==0){
+            if(text=="Pre"){
                 document.getElementById("startDate").value="";
             }
 
@@ -62,6 +63,7 @@
                                     id="name"
                                     name="name"
                                     type="text"
+                                    required
                             />
                             <!--        <p th:if="${#fields.hasErrors('name')}" th:style="'color: red;'">Name cannot be empty.</p>-->
                         </div>
@@ -73,6 +75,7 @@
                                     id="intro"
                                     name="intro"
                                     type="text"
+                                    required
                             />
 
                         </div>
@@ -90,19 +93,23 @@
 
                         <div class="form-group mb-3">
                             <label class="form-label">Status</label>
-                            <select id="status" name="status" class="status" onchange="dateSetter(this)">
+                            <select required id="status" name="status" class="status" onchange="dateSetter(this)">
                                 <option value="Pre" >Pre</option>
-                                <option value="Start">Start</option>
+                                <option value="Start" selected>Start</option>
                                 <option value="End">End</option>
+
                             </select>
                         </div>
 
                         <div class="form-group mb-3">
                             <label class="form-label">Start Date </label>
                             <input
+
                                     type="date"
                                     id="startDate"
                                     name="startDate"
+                                    onchange="checkDate()"
+
                             />
                         </div>
 
@@ -113,16 +120,25 @@
                                     type="date"
                                     id="endDate"
                                     name="endDate"
+                                    onchange="checkDate()"
+                                    required
 
 
                             />
+                            <p id="dateError" style="display: none" class="alert alert-danger">Invalid start or enddate.</p>
+
                         </div>
 
+<!--                        hidden element with all users list to access them           -->
                         <input type="hidden" id="uList" value="${allUserList}">
 
-                        <div form-group class="mx-auto row">
+
+<!--                        the main mmultiselect div to change with mobiscroll library    -->
+
+
+                        <div style="display: flex;flex-direction: column;justify-content: start" form-group class="mx-auto row">
                             <label >Members</label>
-                            <select multiple data-mdb-placeholder="Example placeholder" id="members">
+                            <select  id="members" name="members" multiple>
                                 <option th:each="i : ${allUserList}" th:value="${i.id}" th:text="${i.name}"
                                 ></option>
 
@@ -132,6 +148,7 @@
 
                         <div></div>
 
+<!--                        hidden members element            -->
                         <div class="form-group" >
                             <label hidden>Added members</label>
                             <input
@@ -145,7 +162,9 @@
                             />
                         </div>
 
-                        <div style="margin-top: 1rem" class="form-group">
+
+<!--                        shows the selected elements            -->
+                        <div hidden style="margin-top: 1rem" class="form-group">
                             <label >Selected members</label>
                             <input
 
@@ -162,18 +181,12 @@
                         </div>
 
 
-
-
-
-
-
-
-
-
                         <div class="form-group">
                             <button style="background: black;color: white;margin-top: 1rem;margin-bottom: 1rem" class="btn btn-primary" type="submit">Create Project</button>
                         </div>
                     </form>
+
+<!--                    getting the value of the selected items -->
                     <script>
                         const select2=document.getElementById('members')
                         function getSelected(){
@@ -228,8 +241,8 @@
 
                             Promise.all(fetchPromises)
                                 .then(dataArray => {
-                                    const selectedNames = dataArray.filter(data => data !== undefined); // Remove any undefined values
-                                    document.getElementById('displayList').value = selectedNames.join(', '); // Set the input field value
+                                    const selectedNames = dataArray.filter(data => data !== undefined);
+                                    document.getElementById('displayList').value = selectedNames.join(', '); // set values
                                 });
                         }
                     </script>
@@ -255,6 +268,35 @@
 
 
 
+                    </script>
+                    <script>
+                        function checkDate(){
+                            let startDate=new Date(document.getElementById('startDate').value);
+                            let endDate=new Date(document.getElementById('endDate').value);
+                            if(startDate){
+                                document.getElementById('status').value="Start";
+                            }
+                            if(startDate && endDate){
+                                if(startDate>endDate){
+                                    document.getElementById('dateError').style.display='block';
+                                    document.getElementById('endDate').value=null;
+                                }
+                                else {
+                                    document.getElementById('dateError').style.display='none';
+                                }
+                            }
+                        }
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
+                    <script>
+                        new MultiSelectTag('members',{
+                            rounded: true,    // default true
+                            shadow: false,      // default false
+                            placeholder: 'Search',  // default Search...
+                            onChange: function(values) {
+                                console.log(values)
+                            }
+                        })  // id
                     </script>
                 </div>
             </div>

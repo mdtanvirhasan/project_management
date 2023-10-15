@@ -6,10 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.List;
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @ToString
 public class ProjectDto {
 //    @NotEmpty(message = "Project name cannot be empty.")

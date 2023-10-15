@@ -79,9 +79,9 @@ public class ProjectController {
 
     @PostMapping(value="/createNewProject",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String createNewProject(ProjectDto project, BindingResult bindingResult){
-//        if(bindingResult.hasErrors()){
-//            return "view/addProject";
-//        }
+      /*  if(bindingResult.hasErrors()){
+            return "view/addProject";
+        }*/
 
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
@@ -111,11 +111,38 @@ public class ProjectController {
 
     @GetMapping("/showFormForUpdateProject/{id}")
     public String updateProject(@PathVariable("id") Long id,Model model){
+
+
+
+        List<User> usersList=userRepository.findAll();
+        List<User> updatedList=new ArrayList<User>();
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        String username = authentication.getName();
+        User loggedInUser=userRepository.findByEmail(username);
+        for(User user:usersList){
+            if(user.getId()!=loggedInUser.getId()){
+                updatedList.add(user);
+            }
+        }
 //        Optional<Project> project=projectServiceImpl.getById(id)
 //        model.addAttribute("project",project);
 //        return "view/updateProject";
 
+        model.addAttribute("allUserList",updatedList);
+
+        Project np=projectServiceImpl.getById(id).orElse(null);
+        List <Long> ids=np.getMembersIdList();
+        List <String> names=new ArrayList<>();
+        for( Long uid:ids){
+            names.add(userRepository.findById(uid).get().getName());
+        }
+
+
+
+
         projectServiceImpl.getById(id).ifPresent(project -> model.addAttribute("project", project));
+        model.addAttribute("existingMembers",names);
         return "view/updateProject";
 
     }
@@ -123,9 +150,20 @@ public class ProjectController {
 
 
     @PostMapping(value = "/updateProject/{id}",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String confirmUpdate(@PathVariable("id") Long id, Project project, Model model){
-//        project.setId(id);
-        Project pe=projectServiceImpl.updateProject(project);
+    public String confirmUpdate(@PathVariable("id") Long id, ProjectDto project, Model model){
+
+//        Project np=projectServiceImpl.getById(id).orElse(null);
+//        if(np.getStartDate().isAfter(np.getEndDate())){
+//            model.addAttribute("dateError","Invalid start or enddate.");
+//            return "view/updateProject";
+//        }
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        String username = authentication.getName();
+        User loggedInUser=userRepository.findByEmail(username);
+
+        Project pe=projectServiceImpl.updateProject(project,id);
 
         return "redirect:/projects/projectList";
 

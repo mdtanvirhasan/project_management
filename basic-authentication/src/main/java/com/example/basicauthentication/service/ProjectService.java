@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface ProjectService {
     List<Project>getAllProjects();
     void saveProject(ProjectDto project);
-    Project updateProject(Project project);
+    Project updateProject(ProjectDto project,Long id);
     void deleteProject(Optional<Project> project);
     List<Project> findProjectByStartDateAndEndDate(LocalDate startDate, LocalDate endDate);
 }
