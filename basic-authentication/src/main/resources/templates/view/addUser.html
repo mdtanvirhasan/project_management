@@ -62,6 +62,7 @@
                       type="email"
               />
               <p th:if="${#fields.hasErrors('email')}" th:style="'color: red;'" class="alert alert-danger">Email cannot be empty.</p>
+              <p th:if="${repeatingEmail}" th:style="'color: red;'" class="alert alert-success" th:text="${repeatingEmail}"></p>
 
             </div>
 

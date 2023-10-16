@@ -133,9 +133,9 @@ public class ProjectController {
 
         Project np=projectServiceImpl.getById(id).orElse(null);
         List <Long> ids=np.getMembersIdList();
-        List <String> names=new ArrayList<>();
+        List <User> names=new ArrayList<>();
         for( Long uid:ids){
-            names.add(userRepository.findById(uid).get().getName());
+            names.add(userRepository.findById(uid).orElse(null));
         }
 
 

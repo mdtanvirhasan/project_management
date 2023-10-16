@@ -1,6 +1,7 @@
 package com.example.basicauthentication.controller;
 
 import com.example.basicauthentication.entity.User;
+import com.example.basicauthentication.repository.UserRepository;
 import com.example.basicauthentication.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -21,6 +22,9 @@ public class UserController {
     @Autowired
     private UserServiceImpl userServiceImpl;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping("/newuser")
     public String userForm(Model model){
         User user=new User();
@@ -30,11 +34,18 @@ public class UserController {
     }
 
     @PostMapping(value="/createNewUser",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public  String createNewUser(@Valid User user, BindingResult bindingResult){
+    public  String createNewUser(@Valid User user, BindingResult bindingResult,Model model){
         if(bindingResult.hasErrors()){
             return "view/addUser";
         }
+
+        if(userRepository.findByEmail(user.getEmail())!=null){
+            model.addAttribute("repeatingEmail","email already exists.");
+            return "view/addUser";
+        }
         User newUser=userServiceImpl.saveUser(user);
+
+//        model.addAttribute("registerSuccess","registration successful.");
         return "view/login";
     }
 
